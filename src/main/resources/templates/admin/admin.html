@@ -1,48 +1,52 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <title>Welcome to admin page</title>
+    <meta charset="UTF-8">
+    <title>Users page</title>
 </head>
-
 <body>
-<div>
-    <table>
-        <thead>
-        <th>ID</th>
-        <th>UserName</th>
-        <th>Password</th>
-        <th>Roles</th>
-        </thead>
-        <th:forEach items="${allUsers}" var="admin">
-            <tr>
-                <td>${user.id}</td>
-                <td>${user.name}</td>
-                <td>${user.password}</td>
-                <td>${user.role}</td>
+<div th:switch="${users}">
+    <h2 th:case="null">No users found</h2>
+    <div th:case="*">
 
+
+        <h2>Users</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Password</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.email}"></td>
                 <td>
-                    <th:forEach items="${user.roles}" var="role">${role.name}; </th:forEach>
-                </td>
-                <td>
-                    <form action="${pageContext.request.contextPath}/admin" method="post">
-                        <input type="hidden" name="userId" value="${user.id}"/>
-                        <input type="hidden" name="action" value="update"/>
-                        <button type="submit">Update</button>
+                    <form method="get" th:action="@{/admin/editUser}">
+                        <button type="submit" th:name="id" th:value="${user.id}">Edit</button>
                     </form>
                 </td>
-
                 <td>
-                    <form action="${pageContext.request.contextPath}/admin" method="post">
-                        <input type="hidden" name="userId" value="${user.id}"/>
-                        <input type="hidden" name="action" value="delete"/>
-                        <button type="submit">Delete</button>
+                    <form method="get" th:action="@{/admin/delete}">
+                        <button type="submit" th:name="id" th:value="${user.id}">Delete</button>
                     </form>
                 </td>
             </tr>
-        </th:forEach>
-    </table>
-    <a href="/addUser">Create new user</a>
-    <a href="/">Главная</a>
+            </tr>
+            </tbody>
+        </table>
+        <a href="/admin/addUser">Create new user</a>
+
+    </div>
+
+    <form action="/logout">
+        <input type="submit" value="LOGOUT">
+    </form>
 </div>
 </body>
 </html>

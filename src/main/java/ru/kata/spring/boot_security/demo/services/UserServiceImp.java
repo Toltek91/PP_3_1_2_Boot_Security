@@ -5,7 +5,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entity.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
@@ -26,8 +25,9 @@ public class UserServiceImp implements UserService {
     }
 
 
-    @Transactional(readOnly = true)
+
     @Override
+    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -48,8 +48,8 @@ public class UserServiceImp implements UserService {
         }
     }
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
@@ -57,9 +57,13 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(User user) {
-        userRepository.saveAndFlush(user);
+    public void updateUser(Long id, User user) {
+        userRepository.findById(id);
+        userRepository.save(user);
     }
 
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
 
 }

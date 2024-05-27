@@ -20,21 +20,28 @@ public class RoleServiceImp implements RoleService{
     }
 
 
-    @Transactional(readOnly = true)
+
     @Override
+    @Transactional(readOnly = true)
     public List<Role> getRoles() {
        return roleRepository.findAll();
     }
 
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public Role getRoleById(long id) {
         return roleRepository.getById(id);
     }
 
+
     @Override
+    @Transactional
     public void addRole(Role role) {
         roleRepository.save(role);
+    }
+
+    public RoleRepository getRoleRepository(){
+        return roleRepository;
     }
 }

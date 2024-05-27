@@ -1,27 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Create user</title>
+  <title>User create</title>
 </head>
 <body>
-<form action="#" th:action="@{/user-put}" th:object="${user}" method="post">
+
+<form th:method="POST" th:action="@{/admin/addUser.html}" th:object="${user}">
+  <label for="username">Имя: </label>
+  <input type="text" th:field="*{username}" id="username"/>
+  <div th:if="${#fields.hasErrors('userName')}" th:errors="*{username}"></div>
   <br>
-  <label for="name">Name</label>
-  <input type="text" th:field="*{name}" id="name" placeholder="Name">
-  </br>
+  <label for="password">Password: </label>
+  <input type="text" th:field="*{password}" id="password"/>
+  <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
   <br>
-  <label for="password">Password</label>
-  <input type="text" th:field="*{password}" id="password" placeholder="Password">
-  </br>
-  <br>
-  <label for="email">Email</label>
-  <input type="text" th:field="*{email}" id="email" placeholder="Email">
-  </br>
-  <br>
-  <button type="submit">Добавить пользователя</button>
+  <label for="email">Еmail: </label>
+  <input type="text" th:field="*{email}" id="email"/>
+  <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+  <br/>
+
+  <select id="role-select" required class="form-control" th:field="*{getRoles()}" multiple="multiple" >
+    <option th:each="role : ${allRoles}"
+            th:field="*{getRoles()}"
+            th:value="${role.getId()}"
+            th:text="${role.getRoleName}">Role name
+    </option>
+  </select>
+  <br><br>
+  <input type="submit" value="Создать"/>
 </form>
 
+<form action="/logout">
+  <input type="submit" value="logout">
+</form>
 
 </body>
 </html>

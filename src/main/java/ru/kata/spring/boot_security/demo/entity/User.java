@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.entity;
 
 
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,21 +31,19 @@ public class User implements UserDetails {
     @Size(min = 2, message = "Не меньше 5 знаков")
     private String password;
 
-
     @NotBlank
-    @Column(name = "email",unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
     @Transient
     private String passwordConfirm;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
-
-
+    @Fetch(FetchMode.JOIN)
     private List<Role> roles;
 
     public User() {
@@ -62,7 +59,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return roles;
     }
 
     public void setRoles(List<Role> roles) {
