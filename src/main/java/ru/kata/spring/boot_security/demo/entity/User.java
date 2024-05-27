@@ -2,8 +2,6 @@ package ru.kata.spring.boot_security.demo.entity;
 
 
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -38,18 +36,17 @@ public class User implements UserDetails {
     @Transient
     private String passwordConfirm;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    @Fetch(FetchMode.JOIN)
-    private List<Role> roles;
+    private Collection<Role> roles;
 
     public User() {
     }
 
-    public User(String username, String password, String email, String passwordConfirm, List<Role> roles) {
+    public User(String username, String password, String email, String passwordConfirm, Collection<Role> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -101,6 +98,13 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username='" + username + '\'' + ", password='" + password + '\'' + ", email='" + email + '\'' + '}';
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

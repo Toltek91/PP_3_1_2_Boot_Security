@@ -7,33 +7,33 @@
 <body>
 
 <form th:method="POST" th:action="@{/admin/addUser.html}" th:object="${user}">
-  <label for="username">Имя: </label>
+  <label for="username">Введите Имя: </label>
   <input type="text" th:field="*{username}" id="username"/>
   <div th:if="${#fields.hasErrors('userName')}" th:errors="*{username}"></div>
   <br>
-  <label for="password">Password: </label>
+  <label for="password">Введите Password: </label>
   <input type="text" th:field="*{password}" id="password"/>
   <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
   <br>
-  <label for="email">Еmail: </label>
+  <label for="email">Введите Еmail: </label>
   <input type="text" th:field="*{email}" id="email"/>
   <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
   <br/>
 
-  <select id="role-select" required class="form-control" th:field="*{getRoles()}" multiple="multiple" >
-    <option th:each="role : ${allRoles}"
-            th:field="*{getRoles()}"
-            th:value="${role.getId()}"
-            th:text="${role.getRoleName}">Role name
-    </option>
-  </select>
+  <p>
+    <label>Roles:
+      <input type="checkbox" name="roles"
+             th:each="role : ${roles}"
+             th:text="${role.getRoleName}"
+             th:value="${role.id}"
+             th:field="*{getRoles()}"
+      />
+    </label>
+  </p>
   <br><br>
   <input type="submit" value="Создать"/>
 </form>
 
-<form action="/logout">
-  <input type="submit" value="logout">
-</form>
 
 </body>
 </html>

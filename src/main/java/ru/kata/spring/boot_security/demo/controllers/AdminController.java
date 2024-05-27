@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +11,7 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserServiceImp;
 import ru.kata.spring.boot_security.demo.util.UserValidator;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -21,14 +23,14 @@ public class AdminController {
     private final UserValidator userValidator;
     private final RoleService roleService;
 
-
+    @Autowired
     public AdminController(UserServiceImp userService, UserValidator userValidator, RoleService roleService) {
         this.userService = userService;
         this.userValidator = userValidator;
         this.roleService = roleService;
     }
 
-    @GetMapping()
+    @GetMapping
     public String showUsers(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
@@ -64,13 +66,13 @@ public class AdminController {
         return "admin/editUser";
     }
 
-    @PatchMapping("admin/{id}")
+    @PatchMapping("/admin/{id}")
     public String update(@ModelAttribute("user") User user, @PathVariable("id") long id) {
         userService.updateUser(id, user);
         return "redirect:/admin";
     }
 
-    @DeleteMapping("admin/{id}")
+    @DeleteMapping("admin/delete")
     private String delete(@PathVariable("id") long id) {
         userService.deleteUser(id);
         return "redirect:/admin";

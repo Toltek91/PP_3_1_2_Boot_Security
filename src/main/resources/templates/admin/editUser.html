@@ -2,12 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
-  <title>Edit User</title>
+  <title>User edit</title>
 </head>
 <body>
 
 
-<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.get().getId()})}" th:object="${user}">
   <label for="username">Имя</label>
   <input type="text" th:field="*{get.username}" id="username"/>
   <div th:if="${#fields.hasErrors('username')}" th:errors="*{get.username}"></div>
@@ -23,11 +23,11 @@
 
   <br/>
 
-  <form th:action="@{admin/addUser}" th:object="${user}" method="post">
+  <form th:action="@{admin/addUser.html}" th:object="${user}" method="post">
     <p>
       <label>Roles:
         <input type="checkbox" name="roles"
-               th:each="role : ${allRoles}"
+               th:each="role : ${roles}"
                th:text="${role.getRoleName}"
                th:value="${role.id}"
                th:field="*{get.roles}"
