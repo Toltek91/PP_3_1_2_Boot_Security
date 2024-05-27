@@ -41,7 +41,9 @@
             </tr>
             </tbody>
         </table>
-        <a href="/admin/addUser">Create new user</a>
+        <form method="get" th:action="@{/user/addUser}" th:object="${user}">
+            <button type="submit" th:name="id" th:value="${user.id}">Create user</button>
+        </form>
 
     </div>
 </div>
