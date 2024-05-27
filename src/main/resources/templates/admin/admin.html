@@ -13,14 +13,24 @@
         <th>Password</th>
         <th>Roles</th>
         </thead>
-        <th:forEach items="${allUsers}" var="user">
+        <th:forEach items="${allUsers}" var="admin">
             <tr>
                 <td>${user.id}</td>
                 <td>${user.name}</td>
                 <td>${user.password}</td>
+                <td>${user.role}</td>
+
                 <td>
                     <th:forEach items="${user.roles}" var="role">${role.name}; </th:forEach>
                 </td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/admin" method="post">
+                        <input type="hidden" name="userId" value="${user.id}"/>
+                        <input type="hidden" name="action" value="update"/>
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+
                 <td>
                     <form action="${pageContext.request.contextPath}/admin" method="post">
                         <input type="hidden" name="userId" value="${user.id}"/>
@@ -31,6 +41,7 @@
             </tr>
         </th:forEach>
     </table>
+    <a href="/addUser">Create new user</a>
     <a href="/">Главная</a>
 </div>
 </body>

@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th><h1>Username</h1></th>
+        <th><h1>Password</h1></th>
+        <th><h1>Email</h1></th>
+    </tr>
+
+    <div>
+        <th:block th:each="us : ${user}">
+            <tr>
+                <td th:text="${us.getUsername()}"></td>
+                <td th:text="${us.getPassword()}"></h1></td>
+                <td th:text="${us.getEmail()}"></h1></td>
+
+            </tr>
+        </th:block>
+
+    </div>
+</table>
+<form action="/logout">
+    <input type="submit" value="LOGOUT">
+</form>
+
+</body>
+</html>

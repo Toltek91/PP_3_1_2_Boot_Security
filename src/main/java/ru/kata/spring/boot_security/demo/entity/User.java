@@ -2,12 +2,14 @@ package ru.kata.spring.boot_security.demo.entity;
 
 
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +32,9 @@ public class User implements UserDetails {
     @Size(min = 2, message = "Не меньше 5 знаков")
     private String password;
 
-    @Column(name = "email")
+
+    @NotBlank
+    @Column(name = "email",unique = true)
     private String email;
 
     @Transient
@@ -41,16 +45,19 @@ public class User implements UserDetails {
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    @Fetch(FetchMode.JOIN)
+
+
     private List<Role> roles;
 
     public User() {
     }
 
-    public User(String username, String password, String email) {
+    public User(String username, String password, String email, String passwordConfirm, List<Role> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.passwordConfirm = passwordConfirm;
+        this.roles = roles;
     }
 
     @Override
