@@ -57,8 +57,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(Long id, User user) {
-        userRepository.findById(id);
+    public void updateUser(Long id,User user) {
         userRepository.save(user);
     }
 

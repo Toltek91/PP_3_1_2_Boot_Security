@@ -31,7 +31,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        Optional<User> user = Optional.ofNullable((userRepository.findByUsername(username)));
-       if(user.isEmpty()){
+       if(username.isEmpty()){
            throw  new UsernameNotFoundException(String.format("User '%u not found",username));
        }
        return  new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(),
