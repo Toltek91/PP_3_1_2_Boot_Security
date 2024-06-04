@@ -36,8 +36,6 @@ public class CustomUserDetailService implements UserDetailsService {
        }
        return  new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(),
                mapRolesToAutorities(user.get().getRoles()));
-
-
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAutorities(Collection<Role> roles){

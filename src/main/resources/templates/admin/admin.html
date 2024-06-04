@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin page</title>
@@ -28,21 +28,22 @@
                 <td th:text="${user.getPassword}"></td>
                 <td th:text="${user.getEmail}"></td>
                 <td>
-                    <form method="get" th:action="@{/admin/editUser.html}">
+                    <form method="GET" th:action="@{admin/editUser}" th:object="${user}">
                         <button type="submit" th:name="id" th:value="${user.getId()}">Edit</button>
                     </form>
+                </td>
                     <br>
-                    <form th:method="delete" th:action="@{/admin/delete}">
+                <td>
+                    <form th:method="POST" th:action="@{/admin/delete}" th:object="${user}">
                         <button type="submit" th:name="id" th:value="${user.getId()}">Delete</button>
                     </form>
                 </td>
             </tr>
-            </tr>
             </tbody>
         </table>
         <br>
-        <form method="get" th:action="@{/admin/addUser.html}">
-            <button type="submit">Create user</button>
+        <form method="GET" th:action="@{/admin/addUser}">
+            <button type="submit" value="New User">Create user</button>
         </form>
         <br>
         <form action="/logout">

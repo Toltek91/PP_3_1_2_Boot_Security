@@ -11,16 +11,12 @@
         <th><h1>Username</h1></th>
         <th><h1>Password</h1></th>
         <th><h1>Email</h1></th>
-    </tr>
-
-        <th:block th:each="us : ${user}">
-            <tr>
-                <td th:text="${us.getUsername()}"></td>
-                <td th:text="${us.getPassword()}"></td>
-                <td th:text="${us.getEmail()}"></td>
-
-            </tr>
+        <th:block th:each="user: ${user}">
+                <td th:text="${user.getUsername}"></td>
+                <td th:text="${user.getPassword()}"></td>
+                <td th:text="${user.getEmail()}"></td>
         </th:block>
+    </tr>
 
 </table>
 <form action="/logout">

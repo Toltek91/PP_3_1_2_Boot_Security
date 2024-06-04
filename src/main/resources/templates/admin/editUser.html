@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org" >
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head>
   <meta charset="UTF-8">
   <title>User edit</title>
@@ -21,22 +21,18 @@
   <div th:if="${#fields.hasErrors('email')}" th:errors="*{get.email}"></div>
   <br/>
 
-  <br/>
-
-    <p>
-      <label>Roles:
-        <input type="checkbox" name="roles"
-               th:each="role : ${roles}"
-               th:text="${role.getRoleName}"
-               th:value="${role.id}"
-               th:field="*{get.roles}"
-        />
-      </label>
-    </p>
-  </form>
-
+  <label>Select role:
+    <input type="checkbox" name="roles"
+           th:each="role : ${roles}"
+           th:value="${role.id}"
+           th:text="${role.getAuthority()}"
+           th:field="*{get().roles}"
+    />
+  </label>
+  <br>
 
   <input type="submit" value="Update"/>
+
 </form>
 
 <form action="/logout">

@@ -29,17 +29,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().
+        http.
                 authorizeRequests()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/","/index").permitAll()
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
+
                 .and()
                 .formLogin().successHandler(successUserHandler)
-                .loginProcessingUrl("/process_login")
-                .successHandler(successUserHandler)
-                .failureUrl("/auth/login?error")
+                .failureUrl("/error")
+                .defaultSuccessUrl("/index")
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }
@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth){
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
